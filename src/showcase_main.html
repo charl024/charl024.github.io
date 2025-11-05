@@ -19,11 +19,15 @@
 
     .button-container {
       margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
     }
 
     .btn {
-      display: inline-block;
-      margin: 10px;
+      display: block;
+      width: 250px;
       padding: 12px 24px;
       font-size: 1rem;
       border: 2px solid #333;
@@ -42,12 +46,15 @@
 </head>
 
 <body>
-  <h1>Welcome to my page!</h1>
+  <h1>WebGL Showcase</h1>
   <p>Select a section below:</p>
 
   <div class="button-container">
-    <a class="btn" href="src/showcase_main.html">Projects</a>
-    <a class="btn" href="https://github.com/charl024" target="_blank">GitHub Profile</a>
+    <a class="btn" href="webgl_cg/CS412/HW1/hw1.html">Intro 2D</a>
+    <a class="btn" href="webgl_cg/CS412/HW2/hw2.html">Intro 3D</a>
+    <a class="btn" href="webgl_cg/CS412/HW3/hw3.html">Hierarchical Modeling Demo</a>
+    <a class="btn" href="webgl_cg/CS412/HW4/hw4.html">Lighting Demo</a>
+    <a class="btn" href="webgl_cg/CS412/HW5/hw5.html">Texture Mapping Demo</a>
   </div>
 </body>
 </html>
