@@ -1,0 +1,3 @@
+[submodule "src/webgl_cg/CS412"]
+	path = src/webgl_cg/CS412
+	url = https://github.com/charl024/CS412.git
