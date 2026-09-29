@@ -1,0 +1,5 @@
+# Personal data: keep local, never publish to GitHub Pages.
+*.xlsx
+*.xls
+*.ods
+*.csv

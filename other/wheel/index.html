@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wheel of Anime</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="top">
+    <h1>Wheel of Anime</h1>
+    <p class="sub">Drop in a spreadsheet, spin the wheel.</p>
+  </header>
+
+  <main class="layout">
+    <section class="stage">
+      <div class="wheel-wrap" id="wheelWrap">
+        <canvas id="wheel" role="img" aria-label="Spinning wheel of shows"></canvas>
+        <div class="empty-hint" id="emptyHint">Upload a spreadsheet to fill the wheel</div>
+      </div>
+
+      <div class="ticker">
+        <span class="ticker-label">Pointer</span>
+        <span id="ticker" class="ticker-name">—</span>
+      </div>
+
+      <div class="stage-controls">
+        <button id="spinBtn" class="btn primary big" disabled>Spin!</button>
+        <button id="muteBtn" class="btn icon" aria-pressed="false" aria-label="Mute sound" title="Mute sound">🔊</button>
+        <label class="zoom">
+          <span>Zoom</span>
+          <input type="range" id="zoom" min="1" max="2" step="0.1" value="1">
+          <output id="zoomOut">1×</output>
+        </label>
+      </div>
+      <p class="hint center">Ctrl + scroll (or pinch) over the wheel to zoom · double-click to reset · Space to spin</p>
+    </section>
+
+    <aside class="panels">
+      <section class="panel">
+        <h2>List</h2>
+        <label class="drop" id="drop">
+          <input type="file" id="file" accept=".xlsx,.xls,.xlsm,.ods,.csv" hidden>
+          <strong>Drop a spreadsheet here</strong>
+          <span>or click to browse</span>
+          <small>.xlsx · .xls · .ods · .csv</small>
+        </label>
+        <p class="file-name" id="fileName"></p>
+
+        <details class="paste" id="pasteBox">
+          <summary>…or paste a list</summary>
+          <textarea id="pasteText" rows="7" spellcheck="false"
+            placeholder="One entry per line. A link on the same line is picked up too:&#10;Frieren&#10;Mushishi https://myanimelist.net/anime/457"></textarea>
+          <button id="pasteBtn" class="btn wide" disabled>Use this list</button>
+        </details>
+
+        <div class="field">
+          <label for="sheet">Sheet</label>
+          <select id="sheet" disabled></select>
+        </div>
+        <label class="check"><input type="checkbox" id="dedupe" checked> Remove duplicate names</label>
+
+        <div class="buttons">
+          <button id="shuffleBtn" class="btn" disabled>Shuffle</button>
+          <button id="resetBtn" class="btn" disabled>Restore removed</button>
+        </div>
+        <button id="resetAllBtn" class="btn danger wide" disabled>Reset everything</button>
+
+        <details class="items">
+          <summary><span id="count">0</span> items on the wheel</summary>
+          <ol id="itemList"></ol>
+        </details>
+      </section>
+
+      <section class="panel">
+        <h2>Settings</h2>
+        <div class="field">
+          <label for="duration">Spin time</label>
+          <div class="duration">
+            <input type="range" id="durationRange" min="1" max="30" step="0.5">
+            <input type="number" id="duration" min="1" max="30" step="0.5">
+            <span>s</span>
+          </div>
+        </div>
+        <div class="field">
+          <label for="seed">Seed</label>
+          <input type="text" id="seed" placeholder="Leave empty for fully random" autocomplete="off" spellcheck="false">
+        </div>
+        <p class="hint" id="seedHint"></p>
+        <label class="check"><input type="checkbox" id="autoZoom" checked> Zoom in on the pointer while spinning</label>
+      </section>
+    </aside>
+
+    <aside class="history-col">
+      <section class="panel history-panel">
+        <div class="panel-head">
+          <h2>History</h2>
+          <button id="clearHistory" class="btn small">Clear</button>
+        </div>
+        <ol id="history" class="history"></ol>
+        <p class="hint" id="historyEmpty">No spins yet.</p>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="disclaimer">This is vibecoded to hell for fun.</footer>
+
+  <div id="winnerModal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="winnerName">
+    <div class="modal-card">
+      <div class="glow" aria-hidden="true"></div>
+      <p class="kicker">The wheel has chosen</p>
+      <h2 id="winnerName" class="winner-name"></h2>
+      <a id="winnerLink" class="winner-link" target="_blank" rel="noopener noreferrer" hidden></a>
+      <div class="modal-actions">
+        <button id="removeBtn" class="btn primary">Remove from wheel</button>
+        <button id="keepBtn" class="btn">Keep on wheel</button>
+      </div>
+    </div>
+  </div>
+  <canvas id="confetti" class="confetti" aria-hidden="true"></canvas>
+</body>
+</html>
