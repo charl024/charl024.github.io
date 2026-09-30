@@ -9,8 +9,8 @@
   --accent-2: #ffc94d;
   --accent-3: #6ee7ff;
   --radius: 14px;
-  --display: "Press Start 2P", ui-monospace, monospace;
-  --body: "Pixelify Sans", ui-monospace, monospace;
+  --display: "Comic Relief", "Comic Sans MS", cursive;
+  --body: "Comic Relief", "Comic Sans MS", cursive;
 }
 
 * { box-sizing: border-box; }

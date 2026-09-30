@@ -5,7 +5,7 @@ const MIN_DURATION = 1;
 const MAX_DURATION = 30;
 const MERGE = '__all__';
 const TAU = Math.PI * 2;
-const LABEL_FONT = '"Pixelify Sans", ui-monospace, monospace';
+const LABEL_FONT = '"Comic Relief", "Comic Sans MS", cursive';
 const NAME_HEADER = /^(names?|titles?|shows?|series)$/i;
 const LINK_HEADER = /\b(link|url|mal)\b/i;
 const URL_RE = /^https?:\/\/\S+$/i;
@@ -473,7 +473,12 @@ function spin() {
   const n = state.items.length;
   if (spinning || !n) return;
   const rng = makeRng(state.settings.seed, state.spinCount);
-  const winner = Math.floor(rng() * n);
+  let winner = Math.floor(rng() * n);
+  // Easter egg: the exact seed "OnePiece" (no space) always lands on One Piece when it's on the wheel.
+  if (state.settings.seed === 'OnePiece') {
+    const onePiece = state.items.findIndex((it) => it.name.trim().toLowerCase() === 'one piece');
+    if (onePiece >= 0) winner = onePiece;
+  }
   const offset = 0.15 + rng() * 0.7; // land inside the slice, never on an edge
   const duration = clamp(Number(state.settings.duration) || 5, MIN_DURATION, MAX_DURATION) * 1000;
   const s = TAU / n;
